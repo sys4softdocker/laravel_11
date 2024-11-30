@@ -1,6 +1,7 @@
-# LARAVEL + NGINX + MYSQL
+# LARAVEL
 Infraestrutura Docker-compose para criação de ambiente local de desenvolvimento em ecossistema Laravel 11.
 
+- NginX
 - PHP 8.3
 - MySQL 8.4.3
 
