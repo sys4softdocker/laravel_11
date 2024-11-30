@@ -1,0 +1,44 @@
+services:
+
+  # PHP
+  laravel_php:
+    build:
+      context: ./images/php
+    container_name: laravel_php
+    volumes:
+      - ./volume_app:/var/www/html
+    networks:
+      - laravel_network
+
+  # NginX
+  laravel_nginx:
+    image: nginx:stable-alpine3.20
+    container_name: laravel_nginx
+    volumes:
+      - ./images/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./volume_app:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - laravel_network
+    depends_on:
+      - laravel_php
+
+  # MySQL
+  laravel_mysql:
+    image: mysql:8.4.3
+    container_name: laravel_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - laravel_network
+    volumes:
+      - ./volume_data:/var/lib/mysql
+
+# network
+networks:
+  laravel_network:
+    driver: bridge
+    name: laravel_network
